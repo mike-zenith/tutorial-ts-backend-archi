@@ -1,5 +1,7 @@
-Anemic-model approach
+Anemic model approach
 ===
+
+Hexagonal architecture with anemic models.
 
 Entities do not contain business logic, they focus on storing valid data.
 
@@ -25,7 +27,7 @@ Represents a domain boundary. It contains multiple entites, actions and so on.
 ### use-cases
 
 Use-cases are business driven features that could be further grouped around an aggregate root. Aggregate root is an entity an all cohesive concepts in the domain. 
-Do not create aggregate root-like classes within this anemic-model approach, as even the name "entity" is invalid, therefor its cohesive group would breach its definition and further violate its principles, creating a model-spagetti where dumb models would refer to one other, constantly invalidating and validating each other through setters.
+Do not create aggregate root-like classes within this anemic model approach, as even the name "entity" is invalid, therefor its cohesive group would breach its definition and further violate its principles, creating a model-spagetti where dumb models would refer to one other, constantly invalidating and validating each other through setters.
 
 As our model layer is thin and it does not contain business logic, we have the urge to create higher level, domain driven services that are combined together based on a business workflow. This is the "use-case". Naming it feature would create confusion as its also a tech jargon in testing, otherwise thats still acceptable from business perspective.
 
@@ -120,7 +122,7 @@ Validation is part of the object-lifecycle. We should try to design our models t
 
 Validation libraries should be encapsulated and should be hidden behind an interface. In this way, replacing them would be easier. 
 
-Relying on decorators that are modifying properties and override setters is fine as well in this anemic-model focused line, we can manually create property setter functions and even have a validator dependency behind them thats exposed through an interface. 
+Relying on decorators that are modifying properties and override setters is fine as well in this anemic model focused line, we can manually create property setter functions and even have a validator dependency behind them thats exposed through an interface. 
 
 It works differently on application layer where contract validation is done with DTOs through factories and it should throw error before reaching the domain.
 
