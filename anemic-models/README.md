@@ -1,22 +1,20 @@
 Anemic model approach
 ===
 
-Hexagonal architecture with anemic models.
+Key points:
 
-Entities do not contain business logic, they focus on storing valid data.
-
-Every business logic is in domain services. 
-
-API contracts and traditional controllers and actions are in application folder.
-
-Infrastructure holds implementation details about interfaces focusing in domain data leaving the application.
+* A [hexagonal architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)) with [anemic models](https://en.wikipedia.org/wiki/Anemic_domain_model)
+* [Entities](https://medium.com/codex/ddd-entity-and-value-types-ad08c2962fd#:~:text=In%20DDD%2C%20an%20Entity%20is,identified%20by%20its%20license%20plat.e) do not contain business logic, they focus on storing valid data
+* Every business logic is in a [domain service](https://aspnetboilerplate.com/Pages/Documents/Domain-Services)
+* [API contracts](https://criteria.sh/blog/what-is-an-api-contract) and traditional controllers and actions are in the `application` folder
+* The `infrastructure` folder holds implementation details about interfaces focusing in _domain data leaving the application_
 
 Some of the files contain additional notes.
 
 What are these folders?
 ===
 
-The main reason to have this separation is to identify business/domain boundaries and have *a modular monolith approach* where you have the option to separate actions into simple services through use cases and delegate certain functionalities to smaller services or other layers.
+The main reason to have this separation is to identify business/domain boundaries and have *[a modular monolith approach](https://www.thoughtworks.com/en-us/insights/blog/microservices/modular-monolith-better-way-build-software)* where you have the option to separate actions into simple services through use cases and delegate certain functionalities to smaller services or other layers.
 
 # Folders
 
@@ -26,7 +24,7 @@ Represents a domain boundary. It contains multiple entites, actions and so on.
 
 ### use-cases
 
-Use-cases are business driven features that could be further grouped around an aggregate root. Aggregate root is an entity an all cohesive concepts in the domain. 
+Use-cases are business driven features that could be further grouped around an [aggregate root](https://medium.com/@edin.sahbaz/exploring-the-power-of-aggregates-in-domain-driven-design-and-clean-architecture-6408d6128d3b#:~:text=The%20aggregate%20root%20serves%20as,space%20rather%20than%20technical%20considerations.). Aggregate root is an entity an all cohesive concepts in the domain. 
 Do not create aggregate root-like classes within this anemic model approach, as even the name "entity" is invalid, therefor its cohesive group would breach its definition and further violate its principles, creating a model-spagetti where dumb models would refer to one other, constantly invalidating and validating each other through setters.
 
 As our model layer is thin and it does not contain business logic, we have the urge to create higher level, domain driven services that are combined together based on a business workflow. This is the "use-case". Naming it feature would create confusion as its also a tech jargon in testing, otherwise thats still acceptable from business perspective.
@@ -48,7 +46,7 @@ Application specific ones are usually connected to misconfiguration or API valid
 
 ### application
 
-Code that is traditionally in controllers (MVC) or actions (ADR) are put here or services that are helping in pulling infrastructure dependencies closer to domain. 
+Code that is traditionally in [controllers (MVC) or actions (ADR)](https://en.wikipedia.org/wiki/Action%E2%80%93domain%E2%80%93responder#:~:text=The%20MVC%20model%20is%20very,the%20action%2C%20not%20the%20responder.) are put here or services that are helping in pulling infrastructure dependencies closer to domain. 
 API contract/implementation, networking access to application, middlewares could be put here.
 
 ### infrastructure
@@ -71,7 +69,7 @@ The template repository could fetch email template from database, the template s
 In this setup, email itself, seems like an entity but it needs templated contents, valid address and subject. Therefor the original user id and template are just part of a contract (request api model) and our entity is the templated email.
 Identifying the entity is crucial as otherwise the developers would not know which model has gone through a service and "is valid" and "remains valid". 
 
-This part in other approaches are always done via control-flow checks that are necessary, like always validating a model and throwing error or always checking at least a property on a model. It is necessary when designing modular systems that has to deal with customer-facing IO. In our case, making sure to separate customer facing APIs and internal ones are key to have valid models across the sytem to eliminiate constaintly validating models. It is best to use immutable, typesafe models and close them as much as necessary around creation topic (eg named constructors, factories).
+This part in other approaches are always done via control-flow checks that are necessary, like always validating a model and throwing error or always checking at least a property on a model. It is necessary when designing modular systems that has to deal with customer-facing IO. In our case, making sure to separate customer facing APIs and internal ones are key to have valid models across the sytem to eliminiate constaintly validating models. It is best to use immutable, typesafe models and close them as much as necessary around creation topic (eg [named constructors](https://isocpp.org/wiki/faq/ctors#named-ctor-idiom), factories).
 
 # Alternative folder structure
 
