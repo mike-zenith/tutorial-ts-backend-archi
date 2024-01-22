@@ -104,9 +104,9 @@ In this case, order of calling `services` has to be known for the developers and
 type Purpose = "Shipping" | "Marketing mails" | "Invoice";
 
 class UserAddressManager {
-    public function addAddress(user: User, address: Address);
-    public function setActiveAddress(user: User, address: Address, purpose: Purpose);
-    public function removeAddress(user: User, address: Address);
+    public addAddress(user: User, address: Address);
+    public setActiveAddress(user: User, address: Address, purpose: Purpose);
+    public removeAddress(user: User, address: Address);
 }
 ```
 
@@ -125,8 +125,8 @@ What happens when we want to use these addresses?
 
 ```typescript
 class InvoiceManager {
-    public function createInvoice(user: User, Order: Order): Invoice;
-    public function initiateSend(invoice: Invoice): SentInvoice;
+    public createInvoice(user: User, Order: Order): Invoice;
+    public initiateSend(invoice: Invoice): SentInvoice;
 }
 ```
 
